@@ -3,7 +3,7 @@ import { FaUsers, FaBuilding, FaUserCircle, FaCog, FaSignInAlt, FaUserPlus, FaEx
 
 const Sidebar = () => {
   return (
-    <div className="h-screen bg-blue-950 text-white flex flex-col justify-between">
+    <div className="h-full bg-[#111c3d] text-white flex flex-col justify-between text-sm">
       {/* Top Section */}
       <div>
         {/* Logo */}
