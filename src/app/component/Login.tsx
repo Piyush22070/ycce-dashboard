@@ -3,6 +3,7 @@ import { useSession, signIn, signOut } from "next-auth/react";
 import DashBoard from "./DashBoard";
 import Header from "./Header";
 import SideBar from "./SideBar";
+import Footer from "./Footer";
 
 
 export default function Login() {
