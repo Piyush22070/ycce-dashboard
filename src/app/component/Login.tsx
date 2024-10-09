@@ -18,12 +18,16 @@ export default function Login() {
         {session.user?.image && <img src={session.user.image} alt="profile image" />}
         <button onClick={() => signOut()}>Sign out</button> */}
 
-        <div className="">
-        <Header session = {session}/>
-        <SideBar/>
-        <DashBoard/>
-        <Footer/>
+        <div className="flex flex-row">
+            <div className="w-1/5">
+                <SideBar/>
+            </div>
+            <div className="w-4/5" >
+                <Header session = {session}/>
+                <DashBoard/>
+            </div>
         </div>
+        <Footer/>
       </>
     );
   }
