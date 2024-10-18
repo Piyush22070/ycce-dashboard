@@ -1,9 +1,10 @@
+import Link from 'next/link';
 import React from 'react';
-import { FaUsers, FaBuilding, FaUserCircle, FaCog, FaSignInAlt, FaUserPlus, FaExclamationTriangle } from 'react-icons/fa';
+import {FaMap, FaPage4 , FaBuilding, FaUserCircle, FaCog, FaSignInAlt, FaUserPlus, FaExclamationTriangle } from 'react-icons/fa';
 
 const Sidebar = () => {
   return (
-    <div className="h-full bg-[#111c3d] text-white flex flex-col justify-between text-sm">
+    <div className="h-[1000px] bg-[#111c3d] text-white flex flex-col justify-between text-sm">
       {/* Top Section */}
       <div>
         {/* Logo */}
@@ -15,14 +16,22 @@ const Sidebar = () => {
         {/* Navigation Links */}
         <nav className="mt-6">
           <ul className="space-y-2">
-            <li className="flex items-center px-6 py-2 hover:bg-blue-800">
+
+            <Link href="/" className="flex items-center px-6 py-2 hover:bg-blue-800">
               <FaUserCircle className="mr-3" />
-              <span>Overview</span>
-            </li>
-            <li className="flex items-center px-6 py-2 hover:bg-blue-800">
-              <FaUsers className="mr-3" />
-              <span>Customers</span>
-            </li>
+              <p>Overview</p>
+            </Link>
+
+            <Link href="/BluePrint" className="flex items-center px-6 py-2 hover:bg-blue-800">
+              <FaMap className="mr-3" />
+              <p>Blueprints</p>
+            </Link>
+            
+            <Link href="/Documents" className="flex items-center px-6 py-2 hover:bg-blue-800">
+              <FaPage4 className="mr-3" />
+              <p>Document</p>
+            </Link>
+
             <li className="flex items-center px-6 py-2 hover:bg-blue-800">
               <FaBuilding className="mr-3" />
               <span>Companies</span>
