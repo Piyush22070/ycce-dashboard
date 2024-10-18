@@ -2,6 +2,7 @@
 
 import localFont from "next/font/local";
 import "./globals.css";
+import Sidebar from "./component/SideBar";
 import ClientSessionProvider from "./ClientSessionProvider"; // Import the client component
 
 const geistSans = localFont({
@@ -31,7 +32,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en">
       <ClientSessionProvider>
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-          {children}
+          <div className="flex flex-row">
+            <div className="w-1/5"><Sidebar/></div>
+            <div className="w-4/5">{children}</div>
+          </div>
         </body>
       </ClientSessionProvider>
     </html>
