@@ -208,7 +208,7 @@ export default function SiteList() {
         </div>
 
         {/* table */}
-      <div className="rounded-md border">
+      <div className="rounded-md border h-[230px]">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
