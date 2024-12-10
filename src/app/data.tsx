@@ -7,6 +7,7 @@ export type Site = {
     date : string 
     PhoneNo : string
     email : string
+    sitePlan : string 
   }
   
 const data: Site[] = [
@@ -17,7 +18,8 @@ const data: Site[] = [
       Location: "New CCC Building", 
       date: '2024-10-14',
       PhoneNo: "99999999", 
-      email : '22070963@ycce.in'
+      email : '22070963@ycce.in',
+      sitePlan: "/images/sample.png"
     },
     {
       id: "3u1reuv4",
@@ -26,7 +28,8 @@ const data: Site[] = [
       Location: "SDMP Auditorium",
       date: '2024-10-14',
       PhoneNo: "99999999", 
-      email : '22070963@ycce.in'
+      email : '22070963@ycce.in',
+      sitePlan: "/images/sample.png"
     },
     {
       id: "derv1ws0",
@@ -35,7 +38,8 @@ const data: Site[] = [
       Location: "Parking",
       date: '2024-10-14',
       PhoneNo: "99999999", 
-      email : '22070963@ycce.in'
+      email : '22070963@ycce.in',
+      sitePlan: "/images/sample.png"
     },
     {
       id: "5kma53ae",
@@ -44,7 +48,8 @@ const data: Site[] = [
       Location: "Old Science Building",
       date: '2024-10-14',
       PhoneNo: "99999999", 
-      email : '22070963@ycce.in'
+      email : '22070963@ycce.in',
+      sitePlan: "/images/sample.png"
     },
   ]
 
