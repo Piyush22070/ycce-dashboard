@@ -3,7 +3,7 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pi
 
 export default function Finance(){
   // Dummy data for the charts
-  const salesData = [
+  const ExpensesPerMonth = [
     { name: 'Jan', sales: 15000 },
     { name: 'Feb', sales: 18000 },
     { name: 'Mar', sales: 8000 },
@@ -18,7 +18,7 @@ export default function Finance(){
     { name: 'Dec', sales: 19000 },
   ];
 
-  const trafficData = [
+  const LabourPerSite = [
     { name: 'New CCC', value: 63 },
     { name: 'SDMP', value: 15 },
     { name: 'Parking', value: 12 },
@@ -58,7 +58,7 @@ export default function Finance(){
         <div className="bg-white p-4 rounded-lg shadow-lg text-sm">
           <h2 className="text-lg font-semibold mb-4">Bugets</h2>
           <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={salesData}>
+            <BarChart data={ExpensesPerMonth}>
               <XAxis dataKey="name" />
               <YAxis />
               <Tooltip />
@@ -73,14 +73,14 @@ export default function Finance(){
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
-                data={trafficData}
+                data={LabourPerSite}
                 dataKey="value"
                 nameKey="name"
                 outerRadius={100}
                 fill="#8884d8"
                 label
               >
-                {trafficData.map((entry, index) => (
+                {LabourPerSite.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
