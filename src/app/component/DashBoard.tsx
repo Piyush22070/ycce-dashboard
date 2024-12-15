@@ -1,4 +1,4 @@
-import SiteList from "./SiteList";
+import SiteList from './SiteList'
 import Finance from "./Finance";
 
 export default function DashBoard() {
