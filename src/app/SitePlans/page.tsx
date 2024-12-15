@@ -1,23 +1,63 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { FaEdit } from "react-icons/fa"; // Import the Edit icon
-import { data } from "../data";
+import { FaEdit } from "react-icons/fa";
+import axios from "axios"; // Import axios
+
+// Define the Site type (use this if it's not already defined elsewhere)
+export type Site = {
+  id: string;
+  amount: number;
+  status: "pending" | "processing" | "success" | "failed";
+  Location: string;
+  date: string;
+  PhoneNo: string;
+  email: string;
+  sitePlan: string;
+};
 
 export default function FileExplorer() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [data, setData] = useState<Site[]>([]); // State for holding the fetched data
+  const [loading, setLoading] = useState(true); // State for loading status
+  const [error, setError] = useState<string | null>(null); // State for error handling
   const router = useRouter(); // Next.js router hook for navigation
 
-  // Filter files based on search query
-  const filteredFiles = data.filter((site) =>
+  // Fetch data from the API when the component mounts
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:3000/api/data"); // Axios request
+        setData(response.data); // Store the fetched data in the state
+      } catch (err) {
+        setError("Error fetching data");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Filter files based on the search query
+  const Sites = data.filter((site) =>
     site.Location.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  // Handle the loading and error states
+  if (loading) {
+    return <div className="p-4 text-center">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="p-4 text-center text-red-500">{error}</div>;
+  }
 
   return (
     <div className="p-4">
       {/* Title and Search Bar */}
       <div className="mb-4">
-        <h1 className="text-lg font-bold mb-2">Site Plan </h1>
+        <h1 className="text-lg font-bold mb-2">Site Plan</h1>
         <input
           type="text"
           placeholder="Search files..."
@@ -29,9 +69,9 @@ export default function FileExplorer() {
 
       {/* Site Grid */}
       <div className="grid grid-cols-3 gap-4">
-        {filteredFiles.map((site, index) => (
+        {Sites.map((site) => (
           <div
-            key={index}
+            key={site.id}
             className="relative cursor-pointer flex flex-col items-center border rounded-lg shadow-sm hover:shadow-md group"
           >
             {/* Image Container */}

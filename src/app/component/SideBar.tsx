@@ -33,7 +33,7 @@ const Sidebar = () => {
 
             <li className="flex items-center px-6 py-2 text-white focus:outline-none">
               <FaBuilding className="mr-3" />
-              <span>Companies</span>
+              <span>Billing</span>
             </li>
             <li className="flex items-center px-6 py-2 text-white focus:outline-none">
               <FaUserCircle className="mr-3" />
