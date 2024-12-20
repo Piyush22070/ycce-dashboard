@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import { FaMap, FaPage4 , FaBuilding, FaUserCircle, FaCog, FaSignInAlt, FaUserPlus, FaExclamationTriangle } from 'react-icons/fa';
+import { FaMap, FaPage4 ,FaMoneyBillAlt, FaUserCircle, FaCog, FaWordpress, FaExclamationTriangle,  FaSitemap, FaPeopleCarry} from 'react-icons/fa';
 
 const Sidebar = () => {
   return (
@@ -17,7 +17,7 @@ const Sidebar = () => {
         <nav className="mt-6">
           <ul className="space-y-2">
             <Link href="/" className="flex items-center px-6 py-2 text-white focus:outline-none">
-              <FaUserCircle className="mr-3 " />
+              <FaSitemap className="mr-3 " />
               <p>Overview</p>
             </Link>
 
@@ -27,34 +27,34 @@ const Sidebar = () => {
             </Link>
             
             <Link href="/Documents" className="flex items-center px-6 py-2 text-white focus:outline-none">
-              <FaPage4 className="mr-3" />
+              <FaWordpress className="mr-3" />
               <p>Document</p>
             </Link>
 
-            <li className="flex items-center px-6 py-2 text-white focus:outline-none">
-              <FaBuilding className="mr-3" />
-              <span>Billing</span>
-            </li>
-            <li className="flex items-center px-6 py-2 text-white focus:outline-none">
+            <Link href="/Billing" className="flex items-center px-6 py-2 text-white focus:outline-none">
+              <FaMoneyBillAlt className="mr-3" />
+              <p>Billing</p>
+            </Link>
+            
+            <Link href="/Labour" className="flex items-center px-6 py-2 text-white focus:outline-none">
+              <FaPeopleCarry className="mr-3" />
+              <p>Labour</p>
+            </Link>
+
+            <Link href="/Account" className="flex items-center px-6 py-2 text-white focus:outline-none">
               <FaUserCircle className="mr-3" />
-              <span>Account</span>
-            </li>
-            <li className="flex items-center px-6 py-2 text-white focus:outline-none">
+              <p>Account</p>
+            </Link>
+
+            <Link href="/Setting" className="flex items-center px-6 py-2 text-white focus:outline-none">
               <FaCog className="mr-3" />
-              <span>Settings</span>
-            </li>
-            <li className="flex items-center px-6 py-2 text-white focus:outline-none">
-              <FaSignInAlt className="mr-3" />
-              <span>Login</span>
-            </li>
-            <li className="flex items-center px-6 py-2 text-white focus:outline-none">
-              <FaUserPlus className="mr-3" />
-              <span>Register</span>
-            </li>
-            <li className="flex items-center px-6 py-2 text-white focus:outline-none">
+              <p>Setting</p>
+            </Link>
+
+            <Link href="/Error" className="flex items-center px-6 py-2 text-white focus:outline-none">
               <FaExclamationTriangle className="mr-3" />
-              <span>Error</span>
-            </li>
+              <p>Error</p>
+            </Link>
           </ul>
         </nav>
       </div>

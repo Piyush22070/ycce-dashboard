@@ -2,7 +2,7 @@
 
 import localFont from "next/font/local";
 import "./globals.css";
-import Sidebar from "./component/SideBar";
+import Sidebar from "../components/derived/SideBar";
 import ClientSessionProvider from "./ClientSessionProvider"; // Import the client component
 
 const geistSans = localFont({

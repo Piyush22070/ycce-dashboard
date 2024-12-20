@@ -12,6 +12,7 @@ interface DataItem {
   date: string;
   PhoneNo: string;
   email: string;
+  description : string
 }
 
 export default function ProfileCard({ params }: any) {
@@ -87,7 +88,7 @@ export default function ProfileCard({ params }: any) {
           <p className="text-sm text-gray-700 mb-4">{data.status}</p>
 
           <p className="text-gray-600 mb-6">
-            The fencing work is being performed.
+            {data.description}
           </p>
 
           {/* Personal Information */}

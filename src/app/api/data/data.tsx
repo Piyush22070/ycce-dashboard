@@ -10,6 +10,7 @@ export type Site = {
   labourInvolved: number; // Number of labour involved for the site
   startDate: string;      // Start date of the work at the site
   endDate: string;        // End date of the work at the site
+  description : string
 };
 
 const data: Site[] = [
@@ -25,6 +26,7 @@ const data: Site[] = [
     labourInvolved: 150, // Example number of labourers involved
     startDate: '2024-01-01', // Start date
     endDate: '2024-12-31',   // End date
+    description : "Renovation work is going on."
   },
   {
     id: "3u1reuv4",
@@ -38,6 +40,7 @@ const data: Site[] = [
     labourInvolved: 120, // Example number of labourers involved
     startDate: '2024-02-01', // Start date
     endDate: '2024-11-30',   // End date
+    description : "Renovation work is going on."
   },
   {
     id: "derv1ws0",
@@ -51,6 +54,7 @@ const data: Site[] = [
     labourInvolved: 80, // Example number of labourers involved
     startDate: '2024-03-01', // Start date
     endDate: '2024-09-30',   // End date
+    description : "Renovation work is going on."
   },
   {
     id: "5kma53ae",
@@ -64,6 +68,7 @@ const data: Site[] = [
     labourInvolved: 200, // Example number of labourers involved
     startDate: '2024-05-01', // Start date
     endDate: '2024-12-15',   // End date
+    description : "Renovation work is going on."
   },
   {
     id: "UIu83biwb",
@@ -77,6 +82,7 @@ const data: Site[] = [
     labourInvolved: 50, // Example number of labourers involved
     startDate: '2024-06-01', // Start date
     endDate: '2024-10-31',   // End date
+    description : "Renovation work is going on."
   }
 ];
 
