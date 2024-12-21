@@ -4,12 +4,6 @@ import DashBoard from "../../../components/derived/DashBoard";
 import Header from "../../../components/derived/Header";
 import Footer from "../../../components/derived/Footer";
 import Sidebar from "../../../components/derived/SideBar";
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable"
-
 export default function Login() {
   const { data: session } = useSession();
 
