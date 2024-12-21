@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
-import { toast } from "@/hooks/use-toast";
 
 export type Site = {
   id: string;
@@ -43,13 +42,11 @@ export default function SiteForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/api/data/SiteData", formData, {
+      await axios.post("/api/data/SiteData", formData, {
         headers: { "Content-Type": "application/json" },
       });
-      toast({
-        title: "success",
-        description: "Site data successfully added",
-      })
+      alert("Site details submitted successfully!");
+      
       // Optionally clear the form
       setFormData({
         id: "",
@@ -65,13 +62,13 @@ export default function SiteForm() {
         endDate: "",
         description: "",
       });
-    } catch (error : any) {
-        toast({
-            title: "failed",
-            description: error.message,
-          })
+    } 
+    catch (error: unknown ) {
+      if (error instanceof Error) {
+        alert("Failed "+error)
     }
-  };
+  }
+}
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-md">
       <h2 className="text-2xl font-semibold mb-4">Site Details Form</h2>

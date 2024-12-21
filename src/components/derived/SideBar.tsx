@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from 'react';
-import { FaMap, FaPage4 ,FaMoneyBillAlt, FaUserCircle, FaCog, FaWordpress, FaExclamationTriangle,  FaSitemap, FaPeopleCarry} from 'react-icons/fa';
+import { FaMap ,FaMoneyBillAlt, FaUserCircle, FaCog, FaWordpress, FaExclamationTriangle,  FaSitemap, FaPeopleCarry} from 'react-icons/fa';
 
 const Sidebar = () => {
   return (

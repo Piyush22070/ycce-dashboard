@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { FaEdit } from "react-icons/fa";
 import axios from "axios"; // Import axios
-
+import Image from "next/image";
 // Define the Site type (use this if it's not already defined elsewhere)
 export type Site = {
   id: string;
@@ -18,26 +18,28 @@ export type Site = {
 
 export default function FileExplorer() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [data, setData] = useState<Site[]>([]); // State for holding the fetched data
-  const [loading, setLoading] = useState(true); // State for loading status
-  const [error, setError] = useState<string | null>(null); // State for error handling
-  const router = useRouter(); // Next.js router hook for navigation
+  const [data, setData] = useState<Site[]>([]); 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null); 
+  const router = useRouter();
 
   // Fetch data from the API when the component mounts
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("/api/data/SiteData"); // Axios request
-        setData(response.data); // Store the fetched data in the state
+        const response = await axios.get('/api/data/SiteData'); 
+        setData(response.data);
       } catch (err) {
-        setData([])
+        setData([]);
+        setError((err as Error).message); 
       } finally {
-        setLoading(false);
+        setLoading(false); 
       }
     };
 
-    fetchData();
-  }, []);
+    fetchData(); 
+  }, []); 
+
 
   // Filter files based on the search query
   const Sites = data.filter((site) =>
@@ -50,6 +52,7 @@ export default function FileExplorer() {
   }
 
   if (error) {
+    setError(error)
     return <div className="p-4 text-center text-red-500">{error}</div>;
   }
 
@@ -77,7 +80,7 @@ export default function FileExplorer() {
             {/* Image Container */}
             <div className="relative w-[90] aspect-w-1 aspect-h-1 overflow-hidden rounded">
               {/* Image */}
-              <img
+              <Image
                 src={site.sitePlan}
                 alt={site.Location}
                 className="object-cover w-full h-full transition-transform duration-300 transform group-hover:scale-105"

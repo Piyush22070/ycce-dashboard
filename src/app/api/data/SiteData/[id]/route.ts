@@ -31,12 +31,16 @@ export async function DELETE(req: Request, { params }: { params: { id: string } 
       { message: `Site with ID ${id} successfully deleted` },
       { status: 200 }
     );
-  } catch (error: any) {
-    console.error("Error deleting site:", error);
-    return NextResponse.json(
-      { message: "Failed to delete site", error: error.message },
-      { status: 500 }
-    );
+  }
+   catch (error: unknown) {
+    if (error instanceof Error) {
+      // If the error is an instance of Error, safely access error.message
+      console.error("Error deleting site:", error.message);
+      return NextResponse.json(
+        { message: "Failed to delete site", error: error.message },
+        { status: 500 }
+      );
+    }
   }
 }
 export async function PUT(req: Request, { params }: { params: { id: string } }) {
@@ -80,12 +84,23 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
         { message: "Site data successfully updated", site: updatedSite },
         { status: 200 }
       );
-    } catch (error: any) {
-      console.error("Error updating site:", error);
-      return NextResponse.json(
-        { message: "Failed to update site", error: error.message },
-        { status: 500 }
-      );
+    } 
+    catch (error: unknown) {
+      // Check if the error is an instance of Error before accessing its properties
+      if (error instanceof Error) {
+        console.error("Error updating site:", error.message);
+        return NextResponse.json(
+          { message: "Failed to update site", error: error.message },
+          { status: 500 }
+        );
+      } else {
+        // Handle unexpected error types
+        console.error("Unexpected error:", error);
+        return NextResponse.json(
+          { message: "Failed to update site", error: "Unknown error occurred" },
+          { status: 500 }
+        );
+      }
     }
   }
   

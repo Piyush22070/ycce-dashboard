@@ -11,10 +11,18 @@ import {
   Cell,
 } from "recharts";
 
+// Define the types for your data
+interface SiteData {
+  date: string;
+  amount: number;
+  Location: string;
+  labourInvolved: number;
+}
+
 export default function Finance() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<SiteData[]>([]); // Specify the type here
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   // Fetch the data from /api/data/SiteData
   useEffect(() => {
@@ -24,11 +32,16 @@ export default function Finance() {
         if (!response.ok) {
           throw new Error("Failed to fetch data");
         }
-        const result = await response.json();
+        const result: SiteData[] = await response.json(); // Specify the type of the result
         setData(result);
         setLoading(false);
-      } catch (err : any) {
-        setData([])
+      } catch (err: unknown) {
+        setData([]);
+        if (err instanceof Error) {
+          setError(err.message); // Set error message as a string
+        } else {
+          setError("An unknown error occurred");
+        }
         setLoading(false);
       }
     };
@@ -45,12 +58,12 @@ export default function Finance() {
   }
 
   // Transform backend data into chart-friendly formats
-  const expensesPerMonth = data.map((entry : any) => ({
+  const expensesPerMonth = data.map((entry) => ({
     name: new Date(entry.date).toLocaleString("default", { month: "short" }),
     Expeniture: entry.amount / 1000, // Converting to thousands for better display
   }));
 
-  const labourPerSite = data.map((entry : any) => ({
+  const labourPerSite = data.map((entry) => ({
     name: entry.Location,
     value: entry.labourInvolved,
   }));
@@ -63,7 +76,7 @@ export default function Finance() {
         <div className="bg-white p-4 rounded-lg shadow-lg text-sm">
           <h2 className="text-gray-600">TOTAL BUDGET</h2>
           <p className="text-2xl font-bold">
-            {data.reduce((total, entry : any) => total + entry.amount, 0).toLocaleString()}
+            {data.reduce((total, entry) => total + entry.amount, 0).toLocaleString()}
           </p>
           <p className="text-green-500">↑ Since last year</p>
         </div>
@@ -71,7 +84,7 @@ export default function Finance() {
         <div className="bg-white p-4 rounded-lg shadow-lg text-sm">
           <h2 className="text-gray-600">TOTAL Labour</h2>
           <p className="text-2xl font-bold">
-            {data.reduce((total, entry : any) => total + entry.labourInvolved, 0)}
+            {data.reduce((total, entry) => total + entry.labourInvolved, 0)}
           </p>
         </div>
 

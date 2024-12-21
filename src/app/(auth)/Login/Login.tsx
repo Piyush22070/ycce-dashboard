@@ -1,9 +1,7 @@
 "use client";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn} from "next-auth/react";
 import DashBoard from "../../../components/derived/DashBoard";
 import Header from "../../../components/derived/Header";
-import Footer from "../../../components/derived/Footer";
-import Sidebar from "../../../components/derived/SideBar";
 export default function Login() {
   const { data: session } = useSession();
 

@@ -2,10 +2,8 @@
 import "./globals.css";
 import Sidebar from "../components/derived/SideBar";
 import ClientSessionProvider from '@/app/(auth)/ClientSessionProvider' // Import the client component
-import { Toaster } from "@/components/ui/toaster";
 import Footer from "@/components/derived/Footer";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
-import Header from "@/components/derived/Header";
 
 
 
@@ -43,7 +41,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
               </ResizablePanel>
             </ResizablePanelGroup>
         </main>
-        <Toaster/>
         <Footer/>
         </body>
       </ClientSessionProvider>
