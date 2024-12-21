@@ -14,12 +14,16 @@ export async function GET() {
 
     return NextResponse.json(sites, { status: 200 });
     
-  } catch (error: any) {
-    console.error("Error fetching sites:", error);
-    return NextResponse.json(
-      { message: "Failed to fetch site data", error: error.message },
-      { status: 500 }
-    );
+  } 
+  catch (error: unknown) {
+    if (error instanceof Error) {
+      // Now TypeScript knows that `error` has a `message` property
+      console.error("Error fetching sites:", error.message);
+      return NextResponse.json(
+        { message: "Failed to fetch site data", error: error.message },
+        { status: 500 }
+      );
+    } 
   }
 }
 
@@ -74,11 +78,21 @@ export async function POST(req: Request) {
       { message: "Site data successfully added", site: newSite },
       { status: 201 }
     );
-  } catch (error: any) {
-    console.error("Error processing request:", error);
-    return NextResponse.json(
-      { message: "Error processing request", error: error.message },
-      { status: 500 }
-    );
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      // If the error is an instance of Error, we can safely access its message
+      console.error("Error processing request:", error.message);
+      return NextResponse.json(
+        { message: "Error processing request", error: error.message },
+        { status: 500 }
+      );
+    } else {
+      // If the error is not an instance of Error, handle it here
+      console.error("Unexpected error:", error);
+      return NextResponse.json(
+        { message: "Error processing request", error: "Unknown error occurred" },
+        { status: 500 }
+      );
+    }
   }
 }

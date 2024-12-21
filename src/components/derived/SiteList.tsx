@@ -6,8 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@radix-ui/react-dropdown-menu";
 import {
@@ -40,9 +38,17 @@ export default function SiteList() {
         setData(response.data);
         setLoading(false);
       })
-      .catch((error) => {
+      .catch((error: unknown) => {
         setData([]);
         setLoading(false);
+
+        // Check if the error is an instance of Error and handle it accordingly
+        if (error instanceof Error) {
+          setError(error.message); // Storing the error message (string)
+        } else {
+          // If the error is not an instance of Error, set a generic message
+          setError('An unknown error occurred.');
+        }
       });
   }, []);
 

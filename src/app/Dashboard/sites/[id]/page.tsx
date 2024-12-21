@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Button } from '@/components/ui/button';
 import { FaCalendar, FaPhone, FaFacebookMessenger, FaEdit } from 'react-icons/fa';
-
+import Image from 'next/image';
 interface DataItem {
   sitePlan: string;
   id: string;
@@ -14,26 +14,40 @@ interface DataItem {
   email: string;
   description : string
 }
-
-export default function ProfileCard({ params }: any) {
+interface ProfileCardProps {
+  params: {
+    id: string;
+  };
+}
+export default function ProfileCard({ params }: ProfileCardProps) {
   const [data, setData] = useState<DataItem | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true); // Set loading to true before the request
+      setLoading(true);
       try {
         const response = await axios.get("/api/data/SiteData"); // Axios request
         const profileData = response.data.find((item: DataItem) => item.id === params.id);
-        setData(profileData); // Store the fetched data in state
-      } catch (err: any) {
+        
+        if (profileData) {
+          setData(profileData); // Store the fetched data in state
+        } else {
+          setError("Profile not found"); // Handle case where the data is not found
+        }
+      } catch (err: unknown) {
         // Handle errors
-        setError(err.message || "Error fetching data");
+        if (err instanceof Error) {
+          setError(err.message); // Type-safe error handling
+        } else {
+          setError("An unknown error occurred");
+        }
       } finally {
         setLoading(false); // Set loading to false once the request is complete
       }
     };
+
 
     fetchData(); // Call the fetchData function
   }, [params.id]); // Re-run the effect when params.id 
@@ -55,7 +69,7 @@ export default function ProfileCard({ params }: any) {
       <div className="mx-auto h-[700px] bg-white shadow-lg rounded-lg overflow-hidden flex">
         {/* Left - Profile Image Container */}
         <div className="relative w-2/3 aspect-w-1 aspect-h-1 overflow-hidden rounded group">
-          <img
+          <Image
             src={data.sitePlan}
             alt={data.Location}
             className="object-cover w-full h-full transition-transform duration-300 transform group-hover:scale-105"
