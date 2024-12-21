@@ -41,17 +41,16 @@ export default function SiteList() {
       .catch((error: unknown) => {
         setData([]);
         setLoading(false);
-
-        // Check if the error is an instance of Error and handle it accordingly
-        if (error instanceof Error) {
-          setError(error.message); // Storing the error message (string)
-        } else {
-          // If the error is not an instance of Error, set a generic message
-          setError('An unknown error occurred.');
+        if(0) {
+          if (error instanceof Error) {
+            setError(error.message); // Storing the error message (string)
+          } else {
+            // If the error is not an instance of Error, set a generic message
+            setError('An unknown error occurred.');
+          }
         }
       });
   }, []);
-
   // Filter and pagination logic
   const filteredData = data.filter((site) =>
     site.Location.toLowerCase().includes(filterLocation.toLowerCase())
