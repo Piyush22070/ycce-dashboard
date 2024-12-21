@@ -1,10 +1,14 @@
 "use client";
 import { useSession, signIn, signOut } from "next-auth/react";
-import DashBoard from "./DashBoard";
-import Header from "./Header";
-import SideBar from "./SideBar";
-import Footer from "./Footer";
-
+import DashBoard from "../../../components/derived/DashBoard";
+import Header from "../../../components/derived/Header";
+import Footer from "../../../components/derived/Footer";
+import Sidebar from "../../../components/derived/SideBar";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable"
 
 export default function Login() {
   const { data: session } = useSession();
@@ -17,10 +21,8 @@ export default function Login() {
         Signed in email is {session.user?.email} <br />
         {session.user?.image && <img src={session.user.image} alt="profile image" />}
         <button onClick={() => signOut()}>Sign out</button> */}
-
-        <Header session = {session}/>
+        <Header session={session}/>
         <DashBoard/>
-        <Footer/>
       </>
     );
   }
@@ -28,9 +30,7 @@ export default function Login() {
   return (
     <>
       Not signed in <br />
-
       <button onClick={() => signIn("google")}>Sign in with Google</button>
-      
     </>
   );
 }

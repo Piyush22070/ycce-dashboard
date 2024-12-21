@@ -1,21 +1,13 @@
 // layout.tsx (server-side layout)
-
-import localFont from "next/font/local";
 import "./globals.css";
 import Sidebar from "../components/derived/SideBar";
-import ClientSessionProvider from "./ClientSessionProvider"; // Import the client component
+import ClientSessionProvider from '@/app/(auth)/ClientSessionProvider' // Import the client component
+import { Toaster } from "@/components/ui/toaster";
+import Footer from "@/components/derived/Footer";
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
+import Header from "@/components/derived/Header";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
 
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
 
 export const metadata = {
   title: "Create Next App",
@@ -31,13 +23,33 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <ClientSessionProvider>
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-          <div className="flex flex-row">
-            <div className="w-1/5"><Sidebar/></div>
-            <div className="w-4/5">{children}</div>
-          </div>
+        <body >
+        <main className="flex flex-1">
+            <ResizablePanelGroup direction="horizontal" className="w-full">
+              <ResizablePanel
+                defaultSize={20} 
+                className="bg-gray-200"
+              >
+                <Sidebar />
+              </ResizablePanel>
+
+              <ResizableHandle className="bg-gray-300 w-2" />
+
+              <ResizablePanel
+                defaultSize={80}
+                className="bg-white flex flex-col"
+              >
+                <div className="flex-1 p-4">{children}</div>
+              </ResizablePanel>
+            </ResizablePanelGroup>
+        </main>
+        <Toaster/>
+        <Footer/>
         </body>
       </ClientSessionProvider>
     </html>
   );
 }
+
+
+    

@@ -4,7 +4,7 @@ import { FaMap, FaPage4 ,FaMoneyBillAlt, FaUserCircle, FaCog, FaWordpress, FaExc
 
 const Sidebar = () => {
   return (
-    <div className="h-[1000px] bg-[#111c3d] text-white flex flex-col justify-between text-sm">
+    <div className="h-[1150px] bg-[#111c3d] text-white flex flex-col justify-between text-sm">
       {/* Top Section */}
       <div>
         {/* Logo */}
@@ -21,37 +21,37 @@ const Sidebar = () => {
               <p>Overview</p>
             </Link>
 
-            <Link href="/SitePlans" className="flex items-center px-6 py-2 text-white focus:outline-none">
+            <Link href="/Dashboard/SitePlans" className="flex items-center px-6 py-2 text-white focus:outline-none">
               <FaMap className="mr-3" />
               <p>SitePlans</p>
             </Link>
             
-            <Link href="/Documents" className="flex items-center px-6 py-2 text-white focus:outline-none">
+            <Link href="/Dashboard/Documents" className="flex items-center px-6 py-2 text-white focus:outline-none">
               <FaWordpress className="mr-3" />
               <p>Document</p>
             </Link>
 
-            <Link href="/Billing" className="flex items-center px-6 py-2 text-white focus:outline-none">
+            <Link href="/Dashboard/Billing" className="flex items-center px-6 py-2 text-white focus:outline-none">
               <FaMoneyBillAlt className="mr-3" />
               <p>Billing</p>
             </Link>
             
-            <Link href="/Labour" className="flex items-center px-6 py-2 text-white focus:outline-none">
+            <Link href="/Dashboard/Labour" className="flex items-center px-6 py-2 text-white focus:outline-none">
               <FaPeopleCarry className="mr-3" />
               <p>Labour</p>
             </Link>
 
-            <Link href="/Account" className="flex items-center px-6 py-2 text-white focus:outline-none">
+            <Link href="/Dashboard/Account" className="flex items-center px-6 py-2 text-white focus:outline-none">
               <FaUserCircle className="mr-3" />
               <p>Account</p>
             </Link>
 
-            <Link href="/Setting" className="flex items-center px-6 py-2 text-white focus:outline-none">
+            <Link href="/Dashboard/Setting" className="flex items-center px-6 py-2 text-white focus:outline-none">
               <FaCog className="mr-3" />
               <p>Setting</p>
             </Link>
 
-            <Link href="/Error" className="flex items-center px-6 py-2 text-white focus:outline-none">
+            <Link href="/Dashboard/Error" className="flex items-center px-6 py-2 text-white focus:outline-none">
               <FaExclamationTriangle className="mr-3" />
               <p>Error</p>
             </Link>

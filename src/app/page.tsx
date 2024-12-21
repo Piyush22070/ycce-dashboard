@@ -1,6 +1,11 @@
-import Login from "../components/derived/Login";
-export default function Home(){
-  return <div>
-    <Login />
-  </div>
+import Login from "./(auth)/Login/Login";
+
+export default async function Home() { 
+  // Establish database connection
+  return (
+    <div>
+      <Login />
+    </div>
+  );
 }
+

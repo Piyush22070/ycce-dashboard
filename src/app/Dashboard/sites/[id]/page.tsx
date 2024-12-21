@@ -24,7 +24,7 @@ export default function ProfileCard({ params }: any) {
     const fetchData = async () => {
       setLoading(true); // Set loading to true before the request
       try {
-        const response = await axios.get("http://localhost:3000/api/data"); // Axios request
+        const response = await axios.get("/api/data/SiteData"); // Axios request
         const profileData = response.data.find((item: DataItem) => item.id === params.id);
         setData(profileData); // Store the fetched data in state
       } catch (err: any) {
@@ -74,7 +74,7 @@ export default function ProfileCard({ params }: any) {
               onClick={(e) => {
                 e.stopPropagation(); // Prevent navigation triggered by parent onClick
                 // Assuming you want to navigate to a page with the profile ID (change as necessary)
-                window.location.href = `/SitePlans/${data.id}`;
+                window.location.href = `/Dashboard/SitePlans/${data.id}`;
               }}
             >
               <FaEdit />

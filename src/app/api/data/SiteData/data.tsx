@@ -7,9 +7,9 @@ export type Site = {
   PhoneNo: string;
   email: string;
   sitePlan: string;
-  labourInvolved: number; // Number of labour involved for the site
-  startDate: string;      // Start date of the work at the site
-  endDate: string;        // End date of the work at the site
+  labourInvolved: number; 
+  startDate: string;      
+  endDate: string;      
   description : string
 };
 

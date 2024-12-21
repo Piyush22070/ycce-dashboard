@@ -27,10 +27,10 @@ export default function FileExplorer() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/data"); // Axios request
+        const response = await axios.get("/api/data/SiteData"); // Axios request
         setData(response.data); // Store the fetched data in the state
       } catch (err) {
-        setError("Error fetching data");
+        setData([])
       } finally {
         setLoading(false);
       }
@@ -95,7 +95,7 @@ export default function FileExplorer() {
                   className="p-2 bg-white text-gray-700 rounded-full shadow hover:bg-gray-200"
                   onClick={(e) => {
                     e.stopPropagation(); // Prevent navigation triggered by parent onClick
-                    router.push(`/SitePlans/${site.id}`); // Navigate to the edit page
+                    router.push(`/Dashboard/SitePlans/${site.id}`); // Navigate to the edit page
                   }}
                 >
                   <FaEdit />

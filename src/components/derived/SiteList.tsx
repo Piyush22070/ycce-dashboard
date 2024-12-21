@@ -1,188 +1,71 @@
-
-"use client";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import {
-  ColumnDef,
-  ColumnFiltersState,
-  SortingState,
-  VisibilityState,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
-
+import { FaTrash, FaPlus } from "react-icons/fa"; // Import FaPlus for "+" icon
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import Link from "next/link";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@radix-ui/react-dropdown-menu";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 export type Site = {
+  _id: string;
   id: string;
   amount: number;
   status: "pending" | "processing" | "success" | "failed";
   Location: string;
 };
 
-export const columns: ColumnDef<Site>[] = [
-  {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("status")}</div>
-    ),
-  },
-  {
-    accessorKey: "Location",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Location
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
-    cell: ({ row }) => (
-      <div className="lowercase">{row.getValue("Location")}</div>
-    ),
-  },
-  {
-    accessorKey: "amount",
-    header: () => <div className="text-right">Amount</div>,
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("amount"));
-
-      // Format the amount as a dollar amount
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "INR",
-      }).format(amount);
-
-      return <div className="text-right font-medium">{formatted}</div>;
-    },
-  },
-  {
-    id: "actions",
-    enableHiding: false,
-    cell: ({ row }) => {
-      const payment = row.original;
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="bg-white">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(payment.id)}
-            >
-              Copy payment ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-    },
-  },
-];
-
 export default function SiteList() {
   const [data, setData] = useState<Site[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [filterLocation, setFilterLocation] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState(0);
+  const [rowsPerPage] = useState(10);
 
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = React.useState({});
-
-  // Fetch data from API
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/data")
+      .get("/api/data/SiteData")
       .then((response) => {
         setData(response.data);
         setLoading(false);
       })
       .catch((error) => {
-        setError("Failed to fetch data.");
+        setData([]);
         setLoading(false);
       });
   }, []);
 
-  const table = useReactTable({
-    data,
-    columns,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
-    state: {
-      sorting,
-      columnFilters,
-      columnVisibility,
-      rowSelection,
-    },
-  });
+  // Filter and pagination logic
+  const filteredData = data.filter((site) =>
+    site.Location.toLowerCase().includes(filterLocation.toLowerCase())
+  );
+
+  const paginatedData = filteredData.slice(
+    currentPage * rowsPerPage,
+    (currentPage + 1) * rowsPerPage
+  );
+
+  const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+
+  const deleteSite = async (id: string) => {
+    try {
+      await axios.delete(`/api/data/SiteData/${id}`);
+      setData(data.filter((site) => site._id !== id));
+    } catch (error) {
+      console.error("Failed to delete site:", error);
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -193,125 +76,99 @@ export default function SiteList() {
   }
 
   return (
-      <div className="w-[800px] shadow-lg p-2">
-      <div className="flex items-center py-4">
-
-        {/* input */}
+    <div className="w-[900px] p-4 h-[500px] mx-auto">
+      <div className="flex items-center justify-center py-4">
         <Input
           placeholder="Filter Location..."
-          value={(table.getColumn("Location")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("Location")?.setFilterValue(event.target.value)
-          }
+          value={filterLocation}
+          onChange={(event) => setFilterLocation(event.target.value)}
           className="max-w-sm"
         />
 
-        {/* colum drop down */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
-              Columns <ChevronDown className="ml-2 h-4 w-4" />
+            <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger><Link href={"/Dashboard/AddSite"}><FaPlus/></Link></TooltipTrigger>
+                  <TooltipContent>
+                    <p>Add Site</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+              {/* Display the "+" icon */}
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="bg-white">
-            {table
-              .getAllColumns()
-              .filter((column) => column.getCanHide())
-              .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  </DropdownMenuCheckboxItem>
-                )
-              })}
-          </DropdownMenuContent>
         </DropdownMenu>
-        </div>
-
-        {/* table */}
-      <div className="rounded-md border h-[280px]">
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  )
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                    <Link href={`/sites/${data[row.id].id}`}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                      </Link>
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
       </div>
 
-      {/* Rows selected */}
-      <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{" "}
-          {table.getFilteredRowModel().rows.length} row(s) selected.
+      <div className="overflow-x-auto border">
+        <table className="min-w-full table-auto text-center">
+          <thead>
+            <tr>
+              <th className="px-4 py-2">Location</th>
+              <th className="px-4 py-2">Status</th>
+              <th className="px-4 py-2">Amount</th>
+              <th className="px-4 py-2">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {paginatedData.length ? (
+              paginatedData.map((site) => (
+                <tr key={site._id}>
+                  <td className="px-4 py-2">
+                    <Link href={`/Dashboard/sites/${site.id}`}>
+                      {site.Location}
+                    </Link>
+                  </td>
+                  <td className="px-4 py-2 capitalize">{site.status}</td>
+                  <td className="px-4 py-2">
+                    {new Intl.NumberFormat("en-US", {
+                      style: "currency",
+                      currency: "INR",
+                    }).format(site.amount)}
+                  </td>
+                  <td className="px-4 py-2">
+                    <Button
+                      color="destructive"
+                      onClick={() => deleteSite(site._id)}
+                      className="h-8 w-8 p-0"
+                    >
+                      <FaTrash />
+                    </Button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={4} className="text-center p-4">
+                  No results.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="flex items-center justify-center space-x-2 py-4">
+        <div className="flex-1 text-sm text-muted-foreground text-center">
+          {paginatedData.length} of {filteredData.length} row(s) displayed.
         </div>
 
-        {/* Previous Next Button */}
         <div className="space-x-2">
           <Button
             variant="outline"
             size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 0))}
+            disabled={currentPage === 0}
           >
             Previous
           </Button>
           <Button
             variant="outline"
             size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
+            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1))}
+            disabled={currentPage === totalPages - 1}
           >
             Next
           </Button>

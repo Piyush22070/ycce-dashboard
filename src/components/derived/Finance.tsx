@@ -1,113 +1,126 @@
-import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import React, { useEffect, useState } from "react";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+} from "recharts";
 
-export default function Finance(){
-  // Dummy data for the charts
-  const ExpensesPerMonth = [
-    { name: 'Jan', sales: 15000 },
-    { name: 'Feb', sales: 18000 },
-    { name: 'Mar', sales: 8000 },
-    { name: 'Apr', sales: 5000 },
-    { name: 'May', sales: 12000 },
-    { name: 'Jun', sales: 13000 },
-    { name: 'Jul', sales: 15000 },
-    { name: 'Aug', sales: 16000 },
-    { name: 'Sep', sales: 14000 },
-    { name: 'Oct', sales: 17000 },
-    { name: 'Nov', sales: 18000 },
-    { name: 'Dec', sales: 19000 },
-  ];
+export default function Finance() {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const LabourPerSite = [
-    { name: 'New CCC', value: 63 },
-    { name: 'SDMP', value: 15 },
-    { name: 'Parking', value: 12 },
-    { name: 'Old Science', value: 22 },
-  ];
+  // Fetch the data from /api/data/SiteData
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/api/data/SiteData");
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const result = await response.json();
+        setData(result);
+        setLoading(false);
+      } catch (err : any) {
+        setData([])
+        setLoading(false);
+      }
+    };
 
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', "#45F888"];
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  // Transform backend data into chart-friendly formats
+  const expensesPerMonth = data.map((entry : any) => ({
+    name: new Date(entry.date).toLocaleString("default", { month: "short" }),
+    Expeniture: entry.amount / 1000, // Converting to thousands for better display
+  }));
+
+  const labourPerSite = data.map((entry : any) => ({
+    name: entry.Location,
+    value: entry.labourInvolved,
+  }));
+
+  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#FF45F8"];
 
   return (
     <div className="p-4">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
         <div className="bg-white p-4 rounded-lg shadow-lg text-sm">
-          <h2 className="text-gray-600">BUDGET</h2>
-          <p className="text-2xl font-bold">244k</p>
-          <p className="text-green-500">↑ 12% Since last year</p>
-        </div>
-
-        <div className="bg-white p-4 rounded-lg shadow-lg text-sm">
-          <h2 className="text-gray-600">This Month</h2>
-          <p className="text-2xl font-bold">19k</p>
-          <p className="text-green-500">↑ 16% Since last month</p>
-        </div>
-
-        <div className="bg-white p-4 rounded-lg shadow-lg text-sm">
-          <h2 className="text-gray-600">TASK PROGRESS</h2>
-          <p className="text-2xl font-bold">75.5%</p>
+          <h2 className="text-gray-600">TOTAL BUDGET</h2>
+          <p className="text-2xl font-bold">
+            {data.reduce((total, entry : any) => total + entry.amount, 0).toLocaleString()}
+          </p>
+          <p className="text-green-500">↑ Since last year</p>
         </div>
 
         <div className="bg-white p-4 rounded-lg shadow-lg text-sm">
           <h2 className="text-gray-600">TOTAL Labour</h2>
-          <p className="text-2xl font-bold">155</p>
+          <p className="text-2xl font-bold">
+            {data.reduce((total, entry : any) => total + entry.labourInvolved, 0)}
+          </p>
+        </div>
+
+        <div className="bg-white p-4 rounded-lg shadow-lg text-sm">
+          <h2 className="text-gray-600">ONGOING PROJECTS</h2>
+          <p className="text-2xl font-bold">{data.length}</p>
+        </div>
+
+        <div className="bg-white p-4 rounded-lg shadow-lg text-sm">
+          <h2 className="text-gray-600">RECENT PROJECT</h2>
+          <></>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Sales Bar Chart */}
         <div className="bg-white p-4 rounded-lg shadow-lg text-sm">
-          <h2 className="text-lg font-semibold mb-4">Bugets</h2>
+          <h2 className="text-lg font-semibold mb-4">Expenses Over Time</h2>
           <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={ExpensesPerMonth}>
+            <BarChart data={expensesPerMonth}>
               <XAxis dataKey="name" />
               <YAxis />
               <Tooltip />
-              <Bar dataKey="sales" fill="#8884d8" />
+              <Bar dataKey="Expeniture" fill="#8884d8" />
             </BarChart>
           </ResponsiveContainer>
         </div>
 
-        {/* Traffic Source Pie Chart */}
+        {/* Labour Distribution Pie Chart */}
         <div className="bg-white p-4 rounded-lg shadow-lg text-sm">
-          <h2 className="text-lg font-semibold mb-4">Labour</h2>
+          <h2 className="text-lg font-semibold mb-4">Labour Distribution</h2>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
-                data={LabourPerSite}
+                data={labourPerSite}
                 dataKey="value"
                 nameKey="name"
                 outerRadius={100}
                 fill="#8884d8"
                 label
               >
-                {LabourPerSite.map((entry, index) => (
+                {labourPerSite.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
             </PieChart>
           </ResponsiveContainer>
-          <div className="flex justify-center mt-4">
-            <div className="mx-5 text-center">
-              <p className="text-gray-600">New CCC</p>
-              <p className="font-bold">63%</p>
-            </div>
-            <div className="mr-4 text-center">
-              <p className="text-gray-600">SDMP</p>
-              <p className="font-bold">15%</p>
-            </div>
-            <div className="text-center">
-              <p className="text-gray-600">Parking</p>
-              <p className="font-bold">12%</p>
-            </div>
-            <div className="text-center px-2">
-              <p className="text-gray-600">Old Sc</p>
-              <p className="font-bold">22%</p>
-            </div>
-          </div>
         </div>
       </div>
     </div>
   );
-};
-
-
+}
