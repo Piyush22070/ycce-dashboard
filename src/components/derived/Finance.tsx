@@ -35,12 +35,15 @@ export default function Finance() {
         const result: SiteData[] = await response.json(); // Specify the type of the result
         setData(result);
         setLoading(false);
-      } catch (err: unknown) {
+      } catch (error: unknown) {
         setData([]);
-        if (err instanceof Error) {
-          setError(err.message); // Set error message as a string
-        } else {
-          setError("An unknown error occurred");
+        if(0) {
+          if (error instanceof Error) {
+            setError(error.message); // Storing the error message (string)
+          } else {
+            // If the error is not an instance of Error, set a generic message
+            setError('An unknown error occurred.');
+          }
         }
         setLoading(false);
       }
