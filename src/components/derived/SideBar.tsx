@@ -16,7 +16,7 @@ const Sidebar = () => {
         {/* Navigation Links */}
         <nav className="mt-6">
           <ul className="space-y-2">
-            <Link href="/" className="flex items-center px-6 py-2 text-white focus:outline-none">
+            <Link href="/Dashboard" className="flex items-center px-6 py-2 text-white focus:outline-none">
               <FaSitemap className="mr-3 " />
               <p>Overview</p>
             </Link>

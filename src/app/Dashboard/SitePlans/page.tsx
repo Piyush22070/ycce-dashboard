@@ -81,9 +81,11 @@ export default function FileExplorer() {
             <div className="relative w-[90] aspect-w-1 aspect-h-1 overflow-hidden rounded">
               {/* Image */}
               <Image
+              height={0}
+              width={90}
                 src={site.sitePlan}
-                alt={site.Location}
-                className="object-cover w-full h-full transition-transform duration-300 transform group-hover:scale-105"
+               alt={site.Location}
+                className="object-cover w-full h-[350px] transition-transform duration-300 transform group-hover:scale-105"
               />
               {/* Vignette Effect */}
               <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded"></div>

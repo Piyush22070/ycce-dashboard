@@ -1,6 +1,6 @@
+import React, { useEffect, useState } from 'react';
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { FaTrash, FaPlus } from "react-icons/fa"; // Import FaPlus for "+" icon
+import { FaTrash, FaPlus } from "react-icons/fa";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,7 +13,7 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
+} from "@/components/ui/tooltip";
 
 export type Site = {
   _id: string;
@@ -30,6 +30,8 @@ export default function SiteList() {
   const [filterLocation, setFilterLocation] = useState<string>("");
   const [currentPage, setCurrentPage] = useState(0);
   const [rowsPerPage] = useState(10);
+  const [showDialog, setShowDialog] = useState(false);
+  const [selectedSite, setSelectedSite] = useState<Site | null>(null);
 
   useEffect(() => {
     axios
@@ -41,17 +43,14 @@ export default function SiteList() {
       .catch((error: unknown) => {
         setData([]);
         setLoading(false);
-        if(0) {
-          if (error instanceof Error) {
-            setError(error.message); // Storing the error message (string)
-          } else {
-            // If the error is not an instance of Error, set a generic message
-            setError('An unknown error occurred.');
-          }
+        if(error instanceof Error) {
+          setError(error.message);
+        } else {
+          setError('An unknown error occurred.');
         }
       });
   }, []);
-  // Filter and pagination logic
+
   const filteredData = data.filter((site) =>
     site.Location.toLowerCase().includes(filterLocation.toLowerCase())
   );
@@ -63,12 +62,21 @@ export default function SiteList() {
 
   const totalPages = Math.ceil(filteredData.length / rowsPerPage);
 
-  const deleteSite = async (id: string) => {
-    try {
-      await axios.delete(`/api/data/SiteData/${id}`);
-      setData(data.filter((site) => site._id !== id));
-    } catch (error) {
-      console.error("Failed to delete site:", error);
+  const handleDeleteClick = (site: Site) => {
+    setSelectedSite(site);
+    setShowDialog(true);
+  };
+
+  const deleteSite = async () => {
+    if (selectedSite) {
+      try {
+        await axios.delete(`/api/data/SiteData/${selectedSite._id}`);
+        setData(data.filter((site) => site._id !== selectedSite._id));
+        setShowDialog(false);
+        location.reload()
+      } catch (error) {
+        console.error("Failed to delete site:", error);
+      }
     }
   };
 
@@ -81,7 +89,30 @@ export default function SiteList() {
   }
 
   return (
-    <div className="w-[900px] p-4 h-[500px] mx-auto">
+    <div className="w-[900px] p-4 h-[500px] mx-auto relative">
+      {showDialog && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full mx-4">
+            <h3 className="text-lg font-semibold mb-4">Delete Site</h3>
+            <p className="mb-6">Do you want to delete this site?</p>
+            <div className="flex justify-end space-x-2">
+              <button
+                className="px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300"
+                onClick={() => setShowDialog(false)}
+              >
+                Cancel
+              </button>
+              <button
+                className="px-4 py-2 bg-slate-500  text-white rounded-md hover:bg-slate-600"
+                onClick={deleteSite}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="flex items-center justify-center py-4">
         <Input
           placeholder="Filter Location..."
@@ -93,7 +124,7 @@ export default function SiteList() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
-            <TooltipProvider>
+              <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger><Link href={"/Dashboard/AddSite"}><FaPlus/></Link></TooltipTrigger>
                   <TooltipContent>
@@ -101,7 +132,6 @@ export default function SiteList() {
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
-              {/* Display the "+" icon */}
             </Button>
           </DropdownMenuTrigger>
         </DropdownMenu>
@@ -135,9 +165,8 @@ export default function SiteList() {
                   </td>
                   <td className="px-4 py-2">
                     <Button
-                      color="destructive"
-                      onClick={() => deleteSite(site._id)}
-                      className="h-8 w-8 p-0"
+                      onClick={() => handleDeleteClick(site)}
+                      className="h-8 w-8 p-0  "
                     >
                       <FaTrash />
                     </Button>
