@@ -1,10 +1,10 @@
-import Login from "./(auth)/Login/Login";
+import LandingPage from "@/components/derived/LandingPage";
 
 export default async function Home() { 
   // Establish database connection
   return (
     <div>
-      <Login />
+      <LandingPage/>
     </div>
   );
 }

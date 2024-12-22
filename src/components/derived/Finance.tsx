@@ -10,6 +10,7 @@ import {
   Pie,
   Cell,
 } from "recharts";
+import Loading from "./loading";
 
 // Define the types for your data
 interface SiteData {
@@ -53,7 +54,7 @@ export default function Finance() {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading/>
   }
 
   if (error) {
