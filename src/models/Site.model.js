@@ -50,7 +50,27 @@ const siteSchema = new Schema({
   description: {
     type: String,
     required: true
-  }
+  },
+  documents: [
+    {
+      name: {
+        type: String,
+        required: true
+      },
+      type: {
+        type: String,
+        required: true // e.g., 'pdf', 'svg', 'docx'
+      },
+      url: {
+        type: String,
+        required: true // URL or path to the document
+      },
+      uploadedAt: {
+        type: Date,
+        default: Date.now // Timestamp for when the document was uploaded
+      }
+    }
+  ]
 });
 
 const Site = mongoose.models.Site || mongoose.model('Site', siteSchema);
