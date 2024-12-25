@@ -4,15 +4,19 @@ import { motion } from 'framer-motion';
 import { FileText } from 'lucide-react';
 import { Button } from '../ui/button';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const LandingPage = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Navigation */}
       <nav className="flex justify-between items-center p-4">
-        <div className="flex items-center space-x-2">
-          <FileText className="h-8 text-[#111c3d]" />
-          <span className="text-sm font-bold">Ycce-DashBoard</span>
+      <div className="flex md:flex-row flex-col items-center justify-center">
+          <Image
+          className='rounded-full'
+          width={50}
+          height={50}
+           src={'/images/logo.png'} alt={'main-logo'}/>
         </div>
         <div className="flex text-sm gap-x-2">
           <Button className="px-2 py-2"><Link href='/Dashboard'>Dashboard</Link></Button>
