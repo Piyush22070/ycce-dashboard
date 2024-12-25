@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { FaEdit } from "react-icons/fa";
 import axios from "axios"; // Import axios
 import Image from "next/image";
+import LoadingScreen from "@/components/derived/loading";
 // Define the Site type (use this if it's not already defined elsewhere)
 export type Site = {
   id: string;
@@ -48,7 +49,7 @@ export default function FileExplorer() {
 
   // Handle the loading and error states
   if (loading) {
-    return <div className="p-4 text-center">Loading...</div>;
+    return <LoadingScreen/>;
   }
 
   if (error) {
@@ -66,12 +67,12 @@ export default function FileExplorer() {
           placeholder="Search files..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-[500px] p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="md:w-[500px] w-full  p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
         />
       </div>
 
       {/* Site Grid */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid md:grid-cols-3 gap-4 grid-rows-1 ">
         {Sites.map((site) => (
           <div
             key={site.id}

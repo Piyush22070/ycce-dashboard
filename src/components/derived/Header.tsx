@@ -7,7 +7,7 @@ type HeaderProps = {
 
 const Header: React.FC<HeaderProps> = ({ session }) => {
   return (
-    <div className="flex items-center justify-between p-1 bg-gray-100 shadow-md max-w-4xl w-full mx-auto">
+    <div className="flex items-center justify-between p-2 bg-gray-100 shadow-md ">
       {/* Left Section: Search Icon */}
       <div className="flex items-center">
         <svg

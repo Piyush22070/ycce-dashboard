@@ -75,9 +75,11 @@ export default function Finance() {
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#FF45F8"];
 
   return (
-    <div className="p-4">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-        <div className="bg-white p-4 rounded-lg shadow-lg text-sm">
+    <div className="md:p-4">
+      <div className="md:w-[1000px] flex flex-col gap-2 md:flex md:flex-row justify-evenly m-10">
+
+        {/* first block */}
+        <div className="bg-white p-4 rounded-lg shadow-lg text-sm md:w-[250px]">
           <h2 className="text-gray-600">TOTAL BUDGET</h2>
           <p className="text-2xl font-bold">
             {data.reduce((total, entry) => total + entry.amount, 0).toLocaleString()}
@@ -85,27 +87,30 @@ export default function Finance() {
           <p className="text-green-500">↑ Since last year</p>
         </div>
 
-        <div className="bg-white p-4 rounded-lg shadow-lg text-sm">
+        {/* second Block */}
+        <div className="bg-white p-4 rounded-lg shadow-lg text-sm md:w-[250px]">
           <h2 className="text-gray-600">TOTAL Labour</h2>
           <p className="text-2xl font-bold">
             {data.reduce((total, entry) => total + entry.labourInvolved, 0)}
           </p>
         </div>
 
-        <div className="bg-white p-4 rounded-lg shadow-lg text-sm">
+        {/* third Block */}
+        <div className="bg-white p-4 rounded-lg shadow-lg text-sm md:w-[250px]">
           <h2 className="text-gray-600">ONGOING PROJECTS</h2>
           <p className="text-2xl font-bold">{data.length}</p>
         </div>
 
-        <div className="bg-white p-4 rounded-lg shadow-lg text-sm">
+        {/* fouth block */}
+        <div className="bg-white p-4 rounded-lg shadow-lg text-sm md:w-[250px]">
           <h2 className="text-gray-600">RECENT PROJECT</h2>
-          <></>
+          <p className="text-2xl font-bold">Parking</p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Sales Bar Chart */}
-        <div className="bg-white p-4 rounded-lg shadow-lg text-sm">
+      <div className="flex md:flex-row flex-col p-4 gap-3 justify-evenly">
+        {/* Expenses Bar Chart */}
+        <div className="bg-white p-4 rounded-lg shadow-lg text-sm w-full">
           <h2 className="text-lg font-semibold mb-4">Expenses Over Time</h2>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={expensesPerMonth}>
@@ -118,7 +123,7 @@ export default function Finance() {
         </div>
 
         {/* Labour Distribution Pie Chart */}
-        <div className="bg-white p-4 rounded-lg shadow-lg text-sm">
+        <div className="bg-white p-4 rounded-lg shadow-lg text-sm  w-full">
           <h2 className="text-lg font-semibold mb-4">Labour Distribution</h2>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>

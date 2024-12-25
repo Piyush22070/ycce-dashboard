@@ -8,52 +8,52 @@ const Sidebar = () => {
       {/* Top Section */}
       <div>
         {/* Logo */}
-        <div className="flex items-center justify-center py-6">
-          <span className="text-2xl font-bold">YCCE</span>
+        <div className="flex md:flex-row flex-col items-center justify-center py-6">
+          <span className="text-1xl font-bold">YCCE</span>
           <span className="text-sm ml-1">Production</span>
         </div>
 
         {/* Navigation Links */}
         <nav className="mt-6">
           <ul className="space-y-2">
-            <Link href="/Dashboard" className="flex items-center px-6 py-2 text-white focus:outline-none">
-              <FaSitemap className="mr-3 " />
-              <p>Overview</p>
+            <Link href="/Dashboard" className="flex items-center md:px-6 px-3 py-2 text-white focus:outline-none">
+              <FaSitemap className="md:mr-3" />
+              <p className="hidden md:block">Overview</p>
             </Link>
 
-            <Link href="/Dashboard/SitePlans" className="flex items-center px-6 py-2 text-white focus:outline-none">
-              <FaMap className="mr-3" />
-              <p>SitePlans</p>
+            <Link href="/Dashboard/SitePlans" className="flex items-center md:px-6 px-3 py-2 text-white focus:outline-none">
+              <FaMap className="md:mr-3" />
+              <p className="hidden md:block">SitePlans</p>
             </Link>
             
-            <Link href="/Dashboard/Documents" className="flex items-center px-6 py-2 text-white focus:outline-none">
-              <FaWordpress className="mr-3" />
-              <p>Document</p>
+            <Link href="/Dashboard/Documents" className="flex items-center md:px-6 px-3 py-2 text-white focus:outline-none">
+              <FaWordpress className="md:mr-3" />
+              <p className="hidden md:block">Document</p>
             </Link>
 
-            <Link href="/Dashboard/Billing" className="flex items-center px-6 py-2 text-white focus:outline-none">
-              <FaMoneyBillAlt className="mr-3" />
-              <p>Billing</p>
+            <Link href="/Dashboard/Billing" className="flex items-center md:px-6 px-3 py-2 text-white focus:outline-none">
+              <FaMoneyBillAlt className="md:mr-3" />
+              <p className="hidden md:block">Billing</p>
             </Link>
             
-            <Link href="/Dashboard/Labour" className="flex items-center px-6 py-2 text-white focus:outline-none">
-              <FaPeopleCarry className="mr-3" />
-              <p>Labour</p>
+            <Link href="/Dashboard/Labour" className="flex items-center md:px-6 px-3 py-2 text-white focus:outline-none">
+              <FaPeopleCarry className="md:mr-3" />
+              <p className="hidden md:block">Labour</p>
             </Link>
 
-            <Link href="/Dashboard/Account" className="flex items-center px-6 py-2 text-white focus:outline-none">
-              <FaUserCircle className="mr-3" />
-              <p>Account</p>
+            <Link href="/Dashboard/Account" className="flex items-center md:px-6 px-3 py-2 text-white focus:outline-none">
+              <FaUserCircle className="md:mr-3" />
+              <p className="hidden md:block">Account</p>
             </Link>
 
-            <Link href="/Dashboard/Setting" className="flex items-center px-6 py-2 text-white focus:outline-none">
-              <FaCog className="mr-3" />
-              <p>Setting</p>
+            <Link href="/Dashboard/Setting" className="flex items-center md:px-6 px-3 py-2 text-white focus:outline-none">
+              <FaCog className="md:mr-3" />
+              <p className="hidden md:block">Setting</p>
             </Link>
 
-            <Link href="/Dashboard/Error" className="flex items-center px-6 py-2 text-white focus:outline-none">
-              <FaExclamationTriangle className="mr-3" />
-              <p>Error</p>
+            <Link href="/Dashboard/Error" className="flex items-center md:px-6 px-3 py-2 text-white focus:outline-none">
+              <FaExclamationTriangle className="md:mr-3" />
+              <p className="hidden md:block">Error</p>
             </Link>
           </ul>
         </nav>

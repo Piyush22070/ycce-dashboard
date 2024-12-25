@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import axios from "axios";
+import { Button } from "@/components/ui/button";
 
 type SiteData = {
     id: string;
@@ -111,16 +112,16 @@ const AddBillModal: React.FC<{
 
           {/* Action Buttons */}
           <div className="flex justify-end gap-2">
-            <button
+            <Button
               type="button"
               className="px-4 py-2 bg-gray-300 rounded-lg"
               onClick={onClose}
             >
               Cancel
-            </button>
-            <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded-lg">
+            </Button>
+            <Button type="submit" className="px-4 py-2 bg-[#111c3d] text-white rounded-lg">
               Add Bill
-            </button>
+            </Button>
           </div>
         </form>
       </div>

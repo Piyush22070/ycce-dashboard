@@ -8,7 +8,7 @@ const BudgetCard: React.FC<{
   const progress = (spent / total) * 100;
 
   return (
-    <div className="flex flex-col items-start p-4 bg-white shadow-md rounded-lg w-80 transform transition-transform hover:scale-105">
+    <div className="flex flex-col items-start p-4 bg-white shadow-md rounded-lg md:w-80 transform transition-transform hover:scale-105">
       <div className="flex items-center justify-between w-full">
         <h3 className="text-lg font-semibold">{name}</h3>
         <p className="text-[#111c3d] text-xl font-bold">${total.toLocaleString()}</p>
