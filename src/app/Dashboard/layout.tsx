@@ -22,22 +22,19 @@ export default function RootLayout({ children }: RootLayoutProps) {
     <html lang="en">
       <ClientSessionProvider>
         <body >
-        <main className="flex flex-1">
-            <ResizablePanelGroup direction="horizontal" className="w-full">
+        <main>
+            <ResizablePanelGroup direction="horizontal">
               <ResizablePanel
-                defaultSize={20} 
+                defaultSize={12} 
                 className="bg-gray-200"
-              >
-                <Sidebar />
+              ><Sidebar />
               </ResizablePanel>
 
-              <ResizableHandle className="bg-gray-300 w-2" />
+              <ResizableHandle className="bg-gray-300 w-1" withHandle />
 
               <ResizablePanel
-                defaultSize={80}
-                className="bg-white flex flex-col"
-              >
-                <div className="flex-1 p-4">{children}</div>
+                defaultSize={88}>
+                <div>{children}</div>
               </ResizablePanel>
             </ResizablePanelGroup>
         </main>

@@ -14,6 +14,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import LoadingScreen from './loading';
 
 export type Site = {
   _id: string;
@@ -81,7 +82,7 @@ export default function SiteList() {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div><LoadingScreen/></div>;
   }
 
   if (error) {
@@ -89,7 +90,7 @@ export default function SiteList() {
   }
 
   return (
-    <div className="w-[900px] p-4 h-[500px] mx-auto relative">
+    <div className="md:w-[80%] md:px-12 p-1 text-sm">
       {showDialog && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full mx-4">
@@ -141,6 +142,7 @@ export default function SiteList() {
         <table className="min-w-full table-auto text-center">
           <thead>
             <tr>
+              <th className="px-4 py-2">Sr.no</th>
               <th className="px-4 py-2">Location</th>
               <th className="px-4 py-2">Status</th>
               <th className="px-4 py-2">Amount</th>
@@ -149,8 +151,11 @@ export default function SiteList() {
           </thead>
           <tbody>
             {paginatedData.length ? (
-              paginatedData.map((site) => (
+              paginatedData.map((site,index) => (
                 <tr key={site._id}>
+                  <td className="px-4 py-2">
+                      {index+1}
+                  </td> 
                   <td className="px-4 py-2">
                     <Link href={`/Dashboard/sites/${site.id}`}>
                       {site.Location}

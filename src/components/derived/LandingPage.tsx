@@ -11,19 +11,19 @@ const LandingPage = () => {
       {/* Navigation */}
       <nav className="flex justify-between items-center p-4">
         <div className="flex items-center space-x-2">
-          <FileText className="w-8 h-8 text-[#111c3d]" />
+          <FileText className="h-8 text-[#111c3d]" />
           <span className="text-sm font-bold">Ycce-DashBoard</span>
         </div>
-        <div className="flex space-x-4 text-sm">
-          <Button className="px-4 py-2"><Link href='/Dashboard'>Dashboard</Link></Button>
-          <Button className="px-4 py-2 bg-[#111c3d] text-white rounded-md">
+        <div className="flex text-sm gap-x-2">
+          <Button className="px-2 py-2"><Link href='/Dashboard'>Dashboard</Link></Button>
+          <Button className="px-2 py-2 bg-[#111c3d] text-white rounded-md">
           <Link href='/Dashboard'>Get Started</Link>
           </Button>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <div className="max-w-4xl mx-auto text-center mt-[170px] px-4">
+      <div className=" mx-auto text-center mt-[170px] px-4">
         <motion.h1 
           className="text-5xl font-bold mb-4"
           initial={{ opacity: 0, y: 20 }}
@@ -65,13 +65,13 @@ const LandingPage = () => {
 
       {/* Dashboard Preview */}
       <motion.div 
-        className="max-w-4xl mx-auto mt-20 p-6 bg-white rounded-lg shadow-lg"
+        className="md:w-[800px] mx-auto mt-20 p-6 bg-white rounded-lg shadow-lg"
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.8 }}
       >
         <div className="flex items-center mb-6">
-          <FileText className="w-8 h-8 text-[#111c3d] mr-2" />
+          <FileText className=" h-8 text-[#111c3d] mr-2" />
           <span className="text-sm font-bold">Ycce-DashBoard</span>
         </div>
         
@@ -80,7 +80,7 @@ const LandingPage = () => {
             <h3 className="text-sm font-bold">Hi, Madam 👋</h3>
           </div>
           
-          <div className="grid grid-cols-3 gap-4">
+          <div className="flex md:grid md:grid-cols-3 md:gap-4 flex-col gap-2 text-center">
             <div className="bg-white p-4 rounded-lg shadow">
               <h4 className="text-gray-600">Total Budget</h4>
               <p className="text-xl font-bold">₹650000</p>
