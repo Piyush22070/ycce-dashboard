@@ -4,6 +4,8 @@ import axios from 'axios';
 import { Button } from '@/components/ui/button';
 import { FaCalendar, FaPhone, FaFacebookMessenger, FaEdit } from 'react-icons/fa';
 import Image from 'next/image';
+import LoadingScreen from '@/components/derived/loading';
+
 interface DataItem {
   sitePlan: string;
   id: string;
@@ -14,11 +16,13 @@ interface DataItem {
   email: string;
   description : string
 }
+
 interface ProfileCardProps {
   params: {
     id: string;
   };
 }
+
 export default function ProfileCard({ params }: ProfileCardProps) {
   const [data, setData] = useState<DataItem | null>(null);
   const [loading, setLoading] = useState(true);
@@ -48,12 +52,11 @@ export default function ProfileCard({ params }: ProfileCardProps) {
       }
     };
 
-
     fetchData(); // Call the fetchData function
-  }, [params.id]); // Re-run the effect when params.id 
+  }, [params.id]); // Re-run the effect when params.id changes
 
   if (loading) {
-    return <div className="p-12 text-center">Loading...</div>;
+    return <LoadingScreen/>
   }
 
   if (error) {
@@ -66,10 +69,12 @@ export default function ProfileCard({ params }: ProfileCardProps) {
 
   return (
     <div className="p-12">
-      <div className="mx-auto h-[700px] bg-white shadow-lg rounded-lg overflow-hidden flex">
+      <div className="mx-auto bg-white shadow-lg rounded-lg overflow-hidden flex flex-col md:flex-row">
         {/* Left - Profile Image Container */}
-        <div className="relative w-2/3 aspect-w-1 aspect-h-1 overflow-hidden rounded group">
+        <div className="relative w-full md:w-2/3 aspect-w-1 aspect-h-1 overflow-hidden rounded group">
           <Image
+            height={500}
+            width={500}
             src={data.sitePlan}
             alt={data.Location}
             className="object-cover w-full h-full transition-transform duration-300 transform group-hover:scale-105"
@@ -97,7 +102,7 @@ export default function ProfileCard({ params }: ProfileCardProps) {
         </div>
 
         {/* Right - Information Section */}
-        <div className="w-2/3 p-6">
+        <div className="w-full md:w-2/3 p-6">
           <h1 className="text-3xl font-bold text-gray-900">{data.Location}</h1>
           <p className="text-sm text-gray-700 mb-4">{data.status}</p>
 
@@ -120,7 +125,7 @@ export default function ProfileCard({ params }: ProfileCardProps) {
         </div>
       </div>
 
-      <a className="p-2" href="/">
+      <a className="p-2" href="/Dashboard">
         <Button variant="secondary">Back</Button>
       </a>
     </div>

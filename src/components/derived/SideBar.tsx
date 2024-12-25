@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import React from 'react';
 import { FaMap ,FaMoneyBillAlt, FaUserCircle, FaCog, FaWordpress, FaExclamationTriangle,  FaSitemap, FaPeopleCarry} from 'react-icons/fa';
 
@@ -8,9 +9,12 @@ const Sidebar = () => {
       {/* Top Section */}
       <div>
         {/* Logo */}
-        <div className="flex md:flex-row flex-col items-center justify-center py-6">
-          <span className="text-1xl font-bold">YCCE</span>
-          <span className="text-sm ml-1">Production</span>
+        <div className="flex md:flex-row flex-col items-center justify-center mt-10">
+          <Image
+          className='rounded-full'
+          width={80}
+          height={50}
+           src={'/images/logo.png'} alt={'main-logo'}/>
         </div>
 
         {/* Navigation Links */}
