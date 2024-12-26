@@ -3,10 +3,12 @@
 import React, { useState } from "react";
 import { useSession } from "next-auth/react";
 import Header from "@/components/derived/Header";
-import SiteList from "@/components/derived/SiteList";
+import { pdfs } from "@/app/api/data/pdfData/pdfdata"
+import PdfCard from "@/components/derived/PdfCard";
+
 const Documents: React.FC = () => {
+  const { data: session } = useSession();
   const [isPopUpVisible, setIsPopUpVisible] = useState(false);
-  const { data: session } = useSession(); // Fetch session data on the client
 
   const togglePopUp = () => {
     setIsPopUpVisible((prev) => !prev);
@@ -16,17 +18,25 @@ const Documents: React.FC = () => {
     <div className="min-h-screen bg-gray-100 dark:bg-gray-800 relative">
       {/* Header Component */}
       <div className="py-3">
-      <Header session={session} />
+        <Header session={session} />
       </div>
+
       {/* Main Content */}
       <div className="flex flex-col items-center py-7">
         <h1 className="text-xl font-semibold text-gray-700 dark:text-gray-300">
           Manage Your Documents
         </h1>
       </div>
-    <div className=" flex justify-center items-center">
-      <SiteList/>
+
+      {/* Display PDFs */}
+      <div className="flex justify-center items-center">
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-8 w-9/12">
+          {pdfs.map((pdf) => (
+            <PdfCard key={pdf.id} fileUrl={pdf.pdfPath} title={pdf.title} description={pdf.description} />
+          ))}
+        </div>
       </div>
+
       {/* Sticky Upload Button */}
       <button
         onClick={togglePopUp}
@@ -38,7 +48,9 @@ const Documents: React.FC = () => {
       {/* Upload Popup */}
       <div
         className={`fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-md transition-opacity duration-300 ${
-          isPopUpVisible ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+          isPopUpVisible
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
         }`}
       >
         <div

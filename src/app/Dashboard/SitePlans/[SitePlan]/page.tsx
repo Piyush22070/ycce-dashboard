@@ -181,7 +181,7 @@ const SitePlan = () => {
     return () => {
       canvas.dispose();
     };
-  }, []);
+  }, [activeDrawingMode]);
 
   const handleToolSelect = (tool: string) => {
     setActiveDrawingMode(prevMode => prevMode === tool ? null : tool);
