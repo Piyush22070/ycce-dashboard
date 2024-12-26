@@ -1,12 +1,9 @@
-import { FC } from 'react';
+"use client";
 
-interface SitePlanProps {
-  params: {
-    SitePlan: string;
-  };
-}
-const SitePlan: FC<SitePlanProps> = ({ params }) => {
-  return <div>{params.SitePlan}</div>;
+const SitePlan = () => {
+  return (
+    <div>Site plan</div>
+  );
 };
 
 export default SitePlan;
