@@ -124,21 +124,23 @@ export default function Finance() {
         <div className="bg-white p-4 rounded-lg shadow-lg text-sm w-full md:w-1/3">
           <h2 className="text-lg font-semibold mb-4">Labour Distribution</h2>
           <ResponsiveContainer width="100%" height={300}>
-            <PieChart>
-              <Pie
-                data={labourPerSite}
-                dataKey="value"
-                nameKey="name"
-                outerRadius={100}
-                fill="#8884d8"
-                label
-              >
-                {labourPerSite.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
+  <PieChart>
+    <Pie
+      data={labourPerSite}
+      dataKey="value"
+      nameKey="name"
+      outerRadius={100}
+      fill="#8884d8"
+      label
+    >
+      {labourPerSite.map((entry, index) => (
+        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+      ))}
+    </Pie>
+    <Tooltip formatter={(value, name) => [`Labour: ${value}`, `Site: ${name}`]} />
             </PieChart>
           </ResponsiveContainer>
+
         </div>
 
         <div className="bg-white p-2 rounded-lg shadow-lg text-sm w-full md:w-1/3">
